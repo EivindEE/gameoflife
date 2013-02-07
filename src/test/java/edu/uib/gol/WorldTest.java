@@ -1,16 +1,18 @@
 package edu.uib.gol;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
 import org.junit.Test;
-import edu.uib.gol.World;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:test-context.xml")
 public class WorldTest {
+	@Autowired
 	World emptyWorld;
-	@Before
-	public void before() {
-		emptyWorld = new World();
-	}
+	
 	@Test
 	public void testGetCellAt() {
 		int x = 0,
