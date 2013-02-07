@@ -9,6 +9,7 @@ public class CellTest {
 	@Test
 	public void testToString() {
 		assertTrue("Dead cells should print a single space", Cell.DEAD.toString().equals(" "));
+		assertTrue("Living cells should print a single astrix", Cell.LIVING.toString().equals("*"));
 	}
 
 }
