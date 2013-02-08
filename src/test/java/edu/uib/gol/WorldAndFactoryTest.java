@@ -60,6 +60,6 @@ public class WorldAndFactoryTest {
 		int x = 0,
 			y = 0;
 		assertEquals("The cell at 0,0 should be dead(Cell.DEAD) in an empty map", Cell.DEAD, defaultWorld.getCellAt(x,y));
-		defaultWorld.setCellAt(x,y);
+		defaultWorld.setCellAt(x,y, Cell.LIVING);
 	}
 }

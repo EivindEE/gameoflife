@@ -31,4 +31,8 @@ public class ArrayWorld implements World {
 	public int getHeight() {
 		return height;
 	}
+	public void setCellAt(int x, int y, Cell living) {
+		// TODO Auto-generated method stub
+		
+	}
 }
