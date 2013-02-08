@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -16,11 +18,15 @@ public class WorldAndFactoryTest {
 	WorldFactory worldFactory;
 	
 	World defaultWorld;
-	int defaultLength = 3;
+	int defaultWidth = 3;
 	int defaultHeight = 3;
+	
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+	
 	@Before
 	public void setUp() {
-		defaultWorld = worldFactory.buildWorld(defaultLength, defaultHeight);
+		defaultWorld = worldFactory.buildWorld(defaultWidth, defaultHeight);
 	}
 	
 	@Test
@@ -32,7 +38,7 @@ public class WorldAndFactoryTest {
 	@Test
 	public void testWorldSize() {
 		assertEquals("The length of the universe should be the same as the length given",
-				defaultLength, defaultWorld.getWidth());
+				defaultWidth, defaultWorld.getWidth());
 		assertEquals("The height of the universe should be the same as the height given",
 				defaultHeight, defaultWorld.getHeight());
 		int newHeight = 10, 
@@ -46,8 +52,8 @@ public class WorldAndFactoryTest {
 	
 	@Test
 	public void testInitialState() {
-		for( int i = 0; i < defaultLength; i++) {
-			for (int j = 0; j < defaultHeight; j++) {
+		for( int i = 0; i < defaultWorld.getWidth(); i++) {
+			for (int j = 0; j < defaultWorld.getHeight(); j++) {
 				assertEquals("Each cell in a default world should be dead", Cell.DEAD, defaultWorld.getCellAt(i, j));
 			}
 		}
@@ -55,7 +61,6 @@ public class WorldAndFactoryTest {
 	
 	@Test
 	public void testGetAndSetCellAt() {
-		
 		int x = 0,
 			y = 0;
 		assertEquals("The cell at x,y should be dead(Cell.DEAD) in an empty map", Cell.DEAD, defaultWorld.getCellAt(x, y));
