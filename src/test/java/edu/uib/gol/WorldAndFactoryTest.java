@@ -120,11 +120,33 @@ public class WorldAndFactoryTest {
 	
 	@Test
 	public void testNumberOfLivingAdjacentCells(){
-		int x = 1, y = 1;
-		assertEquals("Number of living adjacent cells should be 0 when all cells are dead", 0, defaultWorld.numberOfAdjacentLivingCells(x,y));
+		int x = 1, y = 1, numberOfLivingAdjacentCells = 0;
+		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells + " when all cells are dead", numberOfLivingAdjacentCells, defaultWorld.numberOfAdjacentLivingCells(x,y));
+		defaultWorld.setCellAt(x + 1, y, Cell.LIVING);
+		numberOfLivingAdjacentCells++;
+		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells + " when cells at x + 1 is living and the rest are dead", numberOfLivingAdjacentCells, defaultWorld.numberOfAdjacentLivingCells(x,y));
+		defaultWorld.setCellAt(x - 1, y, Cell.LIVING);
+		numberOfLivingAdjacentCells++;
+		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells + " when cells at x + 1 and x -1 is living and the rest are dead", numberOfLivingAdjacentCells, defaultWorld.numberOfAdjacentLivingCells(x,y));
 		defaultWorld.setCellAt(x, y + 1, Cell.LIVING);
-		assertEquals("Number of living adjacent cells should be 1 when cell at y + 1 is living and the rest are dead", 1, defaultWorld.numberOfAdjacentLivingCells(x,y));
+		numberOfLivingAdjacentCells++;
+		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells + " when cells at x + 1, x - 1, and y + 1 is living and the rest are dead", numberOfLivingAdjacentCells, defaultWorld.numberOfAdjacentLivingCells(x,y));
 		defaultWorld.setCellAt(x, y - 1, Cell.LIVING);
+		numberOfLivingAdjacentCells++;
+		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells + " when cells at x + 1, x - 1, y + 1 and y - 1 is living and the rest are dead", numberOfLivingAdjacentCells, defaultWorld.numberOfAdjacentLivingCells(x,y));
+		defaultWorld.setCellAt(x - 1, y - 1, Cell.LIVING);
+		numberOfLivingAdjacentCells++;
+		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells + " when cells at x + 1, x - 1, y + 1, y - 1, x-1 & y-1 is living and the rest are dead", numberOfLivingAdjacentCells, defaultWorld.numberOfAdjacentLivingCells(x,y));
+		defaultWorld.setCellAt(x + 1, y + 1, Cell.LIVING);
+		numberOfLivingAdjacentCells++;
+		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells + " when cells at x + 1, x - 1, y + 1, y - 1, x - 1 & y - 1, and x + 1 & y + 1 is living and the rest are dead", numberOfLivingAdjacentCells, defaultWorld.numberOfAdjacentLivingCells(x,y));
+		defaultWorld.setCellAt(x, y, Cell.LIVING);
+		assertEquals("The state of the cell should not affec the number of adjacent cells", numberOfLivingAdjacentCells, defaultWorld.numberOfAdjacentLivingCells(x,y));
+		
+		// Counting in corners should not throw out of bounds exceptions
+		defaultWorld.numberOfAdjacentLivingCells(0, 0);
+		defaultWorld.numberOfAdjacentLivingCells(defaultWidth - 1, defaultHeight - 1);
+
 	}
 	
 	@Test

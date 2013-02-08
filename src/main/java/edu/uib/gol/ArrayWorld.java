@@ -35,16 +35,29 @@ public class ArrayWorld implements World {
 	public int getWidth() {
 		return width;
 	}
+	
 	public int getHeight() {
 		return height;
 	}
+	
 	public void setCellAt(int x, int y, Cell cell) {
 		this.cells[x][y] = cell;
 	}
+	
 	public int numberOfAdjacentLivingCells(int x, int y) {
-		Cell c = cells[x][y];
 		int numberOfLivingCells = 0;
-		numberOfLivingCells = this.getCellAt(x, y + 1) == Cell.LIVING ? 1 : 0;
+		int xStart, xEnd, yStart, yEnd;
+		xStart = x == 0 ? 0 : -1;
+		yStart = y == 0 ? 0 : -1;
+		xEnd = x >= cells.length - 1? 0 : 1;
+		yEnd = y >= cells[0].length - 1? 0 : 1;
+		for (int i = xStart; i <= xEnd; i++) {
+			for (int j = yStart; j <= yEnd; j++) {
+				if (!(i == 0 && j == 0)) {
+					numberOfLivingCells += this.getCellAt(x + i, y + j) == Cell.LIVING ? 1 : 0;
+				}
+			}
+		}
 		return numberOfLivingCells;
 	}
 }
