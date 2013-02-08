@@ -3,7 +3,12 @@ package edu.uib.gol;
 import static org.junit.Assert.*;
 import edu.uib.gol.Cell;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:test-context.xml")
 public class CellTest {
 
 	@Test
