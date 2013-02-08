@@ -126,4 +126,28 @@ public class WorldAndFactoryTest {
 		assertEquals("Number of living adjacent cells should be 1 when cell at y + 1 is living and the rest are dead", 1, defaultWorld.numberOfAdjacentLivingCells(x,y));
 		defaultWorld.setCellAt(x, y - 1, Cell.LIVING);
 	}
+	
+	@Test
+	public void testNumberOfLivingAdjacentCellsHighWidthIndex() {
+		exception.expect(IndexOutOfBoundsException.class);
+		defaultWorld.numberOfAdjacentLivingCells(defaultWidth, 0);
+	}
+	
+	@Test
+	public void testNumberOfLivingAdjacentCellsNegativeWidthIndex() {
+		exception.expect(IndexOutOfBoundsException.class);
+		defaultWorld.numberOfAdjacentLivingCells(-1, 0);
+	}
+	
+	@Test
+	public void testNumberOfLivingAdjacentCellsHighHeightIndex() {
+		exception.expect(IndexOutOfBoundsException.class);
+		defaultWorld.numberOfAdjacentLivingCells(0, defaultHeight);
+	}
+	
+	@Test
+	public void testNumberOfLivingAdjacentCellsNegativeHeightIndex() {
+		exception.expect(IndexOutOfBoundsException.class);
+		defaultWorld.numberOfAdjacentLivingCells(0, -1);
+	}
 }

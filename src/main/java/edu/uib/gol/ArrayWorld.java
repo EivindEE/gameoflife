@@ -42,6 +42,7 @@ public class ArrayWorld implements World {
 		this.cells[x][y] = cell;
 	}
 	public int numberOfAdjacentLivingCells(int x, int y) {
+		Cell c = cells[x][y];
 		int numberOfLivingCells = 0;
 		numberOfLivingCells = this.getCellAt(x, y + 1) == Cell.LIVING ? 1 : 0;
 		return numberOfLivingCells;
