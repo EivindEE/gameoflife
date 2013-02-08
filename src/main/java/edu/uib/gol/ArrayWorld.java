@@ -19,7 +19,7 @@ public class ArrayWorld implements World {
 		this.height = height;
 		this.cells = new Cell[width][height];
 		for(int i = 0; i < cells.length; i++) {
-			for (int j = 0; i < cells[i].length; j++) {
+			for (int j = 0; j < cells[i].length; j++) {
 				cells[i][j] = Cell.DEAD;
 			}
 		}
