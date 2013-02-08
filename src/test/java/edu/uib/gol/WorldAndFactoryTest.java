@@ -69,4 +69,61 @@ public class WorldAndFactoryTest {
 		assertEquals("The cell at x,y + 1 should still be dead", Cell.DEAD, defaultWorld.getCellAt(x, y + 1));
 		assertEquals("The cell at x + 1,y should still be dead", Cell.DEAD, defaultWorld.getCellAt(x + 1, y));
 	}
+	
+	@Test
+	public void testGetCellAtHighHeightIndex() {
+		exception.expect(IndexOutOfBoundsException.class);
+		defaultWorld.getCellAt(0, defaultHeight);
+	}
+	
+	@Test
+	public void testGetCellAtNegativeHeightIndex() {
+		exception.expect(IndexOutOfBoundsException.class);
+		defaultWorld.getCellAt(0, -1);
+	}
+	
+	@Test
+	public void testSetCellAtHighHeightIndex() {
+		exception.expect(IndexOutOfBoundsException.class);
+		defaultWorld.setCellAt(0, defaultHeight, null);
+	}
+	
+	@Test
+	public void testSetCellAtNegativeHeightIndex() {
+		exception.expect(IndexOutOfBoundsException.class);
+		defaultWorld.setCellAt(0, -1, null);
+	}
+	
+	@Test
+	public void testGetCellAtHighWidthIndex() {
+		exception.expect(IndexOutOfBoundsException.class);
+		defaultWorld.getCellAt(defaultWidth, 0);
+	}
+	
+	@Test
+	public void testGetCellAtNegativeWidthIndex() {
+		exception.expect(IndexOutOfBoundsException.class);
+		defaultWorld.getCellAt(-1, 0);
+	}
+	
+	@Test
+	public void testSetCellAtHighWidthIndex() {
+		exception.expect(IndexOutOfBoundsException.class);
+		defaultWorld.setCellAt(defaultWidth, 0, null);
+	}
+	
+	@Test
+	public void testSetCellAtNegativeWidthIndex() {
+		exception.expect(IndexOutOfBoundsException.class);
+		defaultWorld.setCellAt(-1, 0, null);
+	}
+	
+	@Test
+	public void testNumberOfLivingAdjacentCells(){
+		int x = 1, y = 1;
+		assertEquals("Number of living adjacent cells should be 0 when all cells are dead", 0, defaultWorld.numberOfAdjacentLivingCells(x,y));
+		defaultWorld.setCellAt(x, y + 1, Cell.LIVING);
+		assertEquals("Number of living adjacent cells should be 1 when cell at y + 1 is living and the rest are dead", 1, defaultWorld.numberOfAdjacentLivingCells(x,y));
+		defaultWorld.setCellAt(x, y - 1, Cell.LIVING);
+	}
 }

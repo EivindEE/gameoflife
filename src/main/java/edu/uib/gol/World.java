@@ -10,4 +10,6 @@ public interface World {
 
 	public abstract void setCellAt(int x, int y, Cell cell);
 
+	public abstract int numberOfAdjacentLivingCells(int x, int y);
+
 }
