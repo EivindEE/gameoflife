@@ -46,7 +46,6 @@ public class WorldAndFactoryTest {
 	
 	@Test
 	public void testInitialState() {
-		// A new world should contain only Cell.DEAD
 		for( int i = 0; i < defaultLength; i++) {
 			for (int j = 0; j < defaultHeight; j++) {
 				assertEquals("Each cell in a default world should be dead", Cell.DEAD, defaultWorld.getCellAt(i, j));
@@ -59,7 +58,10 @@ public class WorldAndFactoryTest {
 		
 		int x = 0,
 			y = 0;
-		assertEquals("The cell at 0,0 should be dead(Cell.DEAD) in an empty map", Cell.DEAD, defaultWorld.getCellAt(x,y));
-		defaultWorld.setCellAt(x,y, Cell.LIVING);
+		assertEquals("The cell at x,y should be dead(Cell.DEAD) in an empty map", Cell.DEAD, defaultWorld.getCellAt(x, y));
+		defaultWorld.setCellAt(x, y, Cell.LIVING);
+		assertEquals("The cell at x,y should be living when set", Cell.LIVING, defaultWorld.getCellAt(x, y));
+		assertEquals("The cell at x,y + 1 should still be dead", Cell.DEAD, defaultWorld.getCellAt(x, y + 1));
+		assertEquals("The cell at x + 1,y should still be dead", Cell.DEAD, defaultWorld.getCellAt(x + 1, y));
 	}
 }

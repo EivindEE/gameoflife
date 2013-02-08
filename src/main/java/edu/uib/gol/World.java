@@ -8,6 +8,6 @@ public interface World {
 
 	public abstract int getHeight();
 
-	public abstract void setCellAt(int x, int y, Cell living);
+	public abstract void setCellAt(int x, int y, Cell cell);
 
 }
