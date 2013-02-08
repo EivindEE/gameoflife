@@ -25,6 +25,15 @@ public class ArrayWorld implements World {
 		}
 	}
 
+	public ArrayWorld(Cell[][] cells) {
+		this.cells = cells;
+		for (int i = 0; i < this.cells.length; i++) {
+			for (int j = 0; j < this.cells[i].length; j++) {
+				this.cells[i][j] = this.cells[i][j] == null ? Cell.DEAD : this.cells[i][j];
+			}
+		}
+	}
+	
 	/* (non-Javadoc)
 	 * @see edu.uib.gol.World#getCellAt(int, int)
 	 */

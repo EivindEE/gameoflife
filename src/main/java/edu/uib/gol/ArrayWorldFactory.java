@@ -8,4 +8,8 @@ public class ArrayWorldFactory implements WorldFactory {
 		return new ArrayWorld(length, height);
 	}
 
+	public World buildWorld(Cell[][] cells) {
+		return new ArrayWorld(cells);
+	}
+
 }

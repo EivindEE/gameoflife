@@ -2,6 +2,7 @@ package edu.uib.gol;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -30,10 +31,37 @@ public class WorldAndFactoryTest {
 	}
 	
 	@Test
-	public void testBuildWorld() {
+	public void testDefaultBuildWorld() {
 		World world = worldFactory.buildWorld(0,0);
 		assertTrue("The builder should return a World object ", world instanceof World);
 	}
+	
+	@Test
+	public void testArrayBuildWorld() {
+		Cell[][] cells = new Cell[][] 
+				{
+					{Cell.DEAD, Cell.LIVING},
+					{Cell.LIVING, Cell.DEAD}
+				};
+		World fromArray = worldFactory.buildWorld(cells);
+		assertEquals("Cell at 0,0 should be dead", cells[0][0], fromArray.getCellAt(0, 0));
+		assertEquals("Cell at 1,1 should be dead", cells[1][1], fromArray.getCellAt(1, 1));
+		assertEquals("Cell at 0,1 should be living", cells[0][1], fromArray.getCellAt(0, 1));
+		assertEquals("Cell at 1,0 should be living", cells[1][0], fromArray.getCellAt(1, 0));
+	}
+	
+	@Test
+	public void testArrayBuildWorldNullValues() {
+		Cell[][] cells = new Cell[][] 
+				{
+					{null}
+				};
+		// Null values should be stored as Cell.DEAD
+		World fromArray = worldFactory.buildWorld(cells);
+		assertNotNull("World object should not contain null values", fromArray.getCellAt(0, 0));
+		assertEquals("null cells passed to WorldFactory should be converted to Cell.DEAD", Cell.DEAD, fromArray.getCellAt(0, 0));
+	}
+	
 	
 	@Test
 	public void testWorldSize() {
