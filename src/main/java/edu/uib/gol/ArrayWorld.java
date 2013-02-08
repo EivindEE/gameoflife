@@ -9,6 +9,15 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ArrayWorld implements World {
+	int length, height;
+	public ArrayWorld() {
+		
+	}
+	public ArrayWorld(int length, int height) {
+		this.length = length;
+		this.height = height;
+	}
+
 	/* (non-Javadoc)
 	 * @see edu.uib.gol.World#getCellAt(int, int)
 	 */
@@ -16,5 +25,10 @@ public class ArrayWorld implements World {
 		return Cell.DEAD;
 	}
 	
-
+	public int getWidth() {
+		return length;
+	}
+	public int getHeight() {
+		return height;
+	}
 }
