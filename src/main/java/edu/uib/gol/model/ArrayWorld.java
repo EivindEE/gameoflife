@@ -1,18 +1,14 @@
 package edu.uib.gol.model;
 
-import org.springframework.stereotype.Component;
 
 /**
  * 
  * @author eivindelseth
  *
  */
-@Component
-public class ArrayWorld implements World {
-	Cell[][] cells;
-	public ArrayWorld() {
-		
-	}
+public class ArrayWorld implements World{
+	protected Cell[][] cells;
+	
 	public ArrayWorld(int width, int height) {
 		this.cells = new Cell[width][height];
 		for(int i = 0; i < cells.length; i++) {
