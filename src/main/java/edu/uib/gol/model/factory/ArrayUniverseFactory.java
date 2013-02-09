@@ -1,4 +1,4 @@
-package edu.uib.gol.model;
+package edu.uib.gol.model.factory;
 
 import org.springframework.stereotype.Component;
 

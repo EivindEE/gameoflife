@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import edu.uib.gol.model.Cell;
 import edu.uib.gol.model.World;
-import edu.uib.gol.model.WorldFactory;
+import edu.uib.gol.model.factory.WorldFactory;
 
 
 @Component

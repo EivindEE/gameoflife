@@ -1,4 +1,4 @@
-package edu.uib.gol.model;
+package edu.uib.gol.model.factory;
 
 public interface UniverseFactory {
 

@@ -1,4 +1,7 @@
-package edu.uib.gol.model;
+package edu.uib.gol.model.factory;
+
+import edu.uib.gol.model.Cell;
+import edu.uib.gol.model.World;
 
 public interface WorldFactory {
 
