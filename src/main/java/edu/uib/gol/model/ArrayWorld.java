@@ -1,5 +1,7 @@
 package edu.uib.gol.model;
 
+import java.util.Arrays;
+
 
 /**
  * 
@@ -7,6 +9,8 @@ package edu.uib.gol.model;
  *
  */
 public class ArrayWorld implements World{
+
+
 	protected Cell[][] cells;
 	
 	public ArrayWorld(int width, int height) {
@@ -61,5 +65,19 @@ public class ArrayWorld implements World{
 			}
 		}
 		return numberOfLivingCells;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ArrayWorld other = (ArrayWorld) obj;
+		if (!Arrays.deepEquals(cells, other.cells))
+			return false;
+		return true;
 	}
 }

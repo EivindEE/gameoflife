@@ -41,5 +41,4 @@ public interface World {
 	 * @return the number of living adjacent cells
 	 */
 	public abstract int numberOfAdjacentLivingCells(int x, int y);
-
 }

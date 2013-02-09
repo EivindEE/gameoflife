@@ -1,6 +1,8 @@
 package edu.uib.gol.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
@@ -215,5 +217,27 @@ public class WorldAndFactoryTest {
 	public void testNumberOfLivingAdjacentCellsNegativeHeightIndex() {
 		exception.expect(IndexOutOfBoundsException.class);
 		defaultWorld.numberOfAdjacentLivingCells(0, -1);
+	}
+	
+	@Test
+	public void testEquals() {
+		Cell[][] cells = new Cell[][]{
+				{Cell.LIVING, Cell.DEAD},
+				{Cell.DEAD, Cell.LIVING},
+		};
+		Cell[][] sameCells = new Cell[][]{
+				{Cell.LIVING, Cell.DEAD},
+				{Cell.DEAD, Cell.LIVING},
+		};
+		Cell[][] differentCells = new Cell[][]{
+				{Cell.DEAD, Cell.DEAD},
+				{Cell.DEAD, Cell.LIVING},
+		};
+		World world = worldFactory.createWorld(cells);
+		World sameWorld = worldFactory.createWorld(sameCells);
+		assertTrue("Two worlds with equal internal states should be equal", world.equals(sameWorld));
+		World differentWorld = worldFactory.createWorld(differentCells);
+		assertFalse("Two worlds with different internal states should be equal", world.equals(differentWorld));
+		
 	}
 }
