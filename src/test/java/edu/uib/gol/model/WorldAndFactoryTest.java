@@ -31,12 +31,12 @@ public class WorldAndFactoryTest {
 	
 	@Before
 	public void setUp() {
-		defaultWorld = worldFactory.buildWorld(defaultWidth, defaultHeight);
+		defaultWorld = worldFactory.createWorld(defaultWidth, defaultHeight);
 	}
 	
 	@Test
 	public void testDefaultBuildWorld() {
-		World world = worldFactory.buildWorld(0,0);
+		World world = worldFactory.createWorld(0,0);
 		assertTrue("The builder should return a World object ", world instanceof World);
 	}
 	
@@ -75,7 +75,7 @@ public class WorldAndFactoryTest {
 				defaultHeight, defaultWorld.getHeight());
 		int newHeight = 10, 
 			newLength = 11;
-		World newWorld = worldFactory.buildWorld(newLength, newHeight);
+		World newWorld = worldFactory.createWorld(newLength, newHeight);
 		assertEquals("The length of the universe should be the same as the length given",
 				newLength, newWorld.getWidth());
 		assertEquals("The height of the universe should be the same as the height given",

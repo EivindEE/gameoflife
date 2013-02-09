@@ -9,15 +9,21 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import edu.uib.gol.model.factory.UniverseFactory;
+import edu.uib.gol.model.factory.WorldFactory;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-context.xml")
 public class UniverseAndFactoryTest {
 	@Autowired
-	UniverseFactory universeFactory; 
+	UniverseFactory universeFactory;
+	
+	@Autowired
+	WorldFactory worldFactory;
+	
 	@Test
 	public void testCreateUniverse() {
-		fail("Not implemented");
+		World world = worldFactory.createWorld(0,0);
+		universeFactory.createUniverse(worldFactory, world);
 	}
 
 }

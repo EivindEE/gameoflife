@@ -8,7 +8,7 @@ import edu.uib.gol.model.World;
 
 @Component
 public class ArrayWorldFactory implements WorldFactory {
-	public World buildWorld(int length, int height) {
+	public World createWorld(int length, int height) {
 		return new ArrayWorld(length, height);
 	}
 
