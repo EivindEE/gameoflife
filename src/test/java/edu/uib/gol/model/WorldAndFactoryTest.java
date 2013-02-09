@@ -35,13 +35,13 @@ public class WorldAndFactoryTest {
 	}
 	
 	@Test
-	public void testDefaultBuildWorld() {
+	public void testDefaultCreateWorld() {
 		World world = worldFactory.createWorld(0,0);
 		assertTrue("The builder should return a World object ", world instanceof World);
 	}
 	
 	@Test
-	public void testArrayBuildWorld() {
+	public void testArrayCreateWorld() {
 		Cell[][] cells = new Cell[][] 
 				{
 					{Cell.DEAD, Cell.LIVING},
@@ -55,7 +55,7 @@ public class WorldAndFactoryTest {
 	}
 	
 	@Test
-	public void testArrayBuildWorldNullValues() {
+	public void testArrayCreateWorldNullValues() {
 		Cell[][] cells = new Cell[][] 
 				{
 					{null}
