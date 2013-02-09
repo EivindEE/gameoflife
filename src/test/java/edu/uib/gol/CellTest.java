@@ -1,7 +1,8 @@
 package edu.uib.gol;
 
 import static org.junit.Assert.*;
-import edu.uib.gol.Cell;
+import edu.uib.gol.model.Cell;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

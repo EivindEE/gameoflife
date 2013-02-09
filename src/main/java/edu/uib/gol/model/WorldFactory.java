@@ -1,4 +1,4 @@
-package edu.uib.gol;
+package edu.uib.gol.model;
 
 public interface WorldFactory {
 
