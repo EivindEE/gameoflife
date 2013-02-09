@@ -1,5 +1,10 @@
 package edu.uib.gol.model;
-
+/**
+ * A cell can be either living or dead.
+ * This is the base unit in the game of life
+ * @author eivindelseth
+ *
+ */
 public enum Cell {
 	LIVING("*"), DEAD(" ");
 	private String state;
@@ -9,7 +14,6 @@ public enum Cell {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return this.state;
 	}
 }

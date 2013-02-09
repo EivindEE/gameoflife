@@ -9,7 +9,7 @@ public class UniverseImpl implements Universe {
 	
 	public UniverseImpl(WorldFactory worldFactory, World initialWorld) {
 		this.worldFactory = worldFactory;
-		world = initialWorld;
+		this.world = initialWorld;
 	}
 	
 	public World getWorld() {
