@@ -47,7 +47,7 @@ public class WorldAndFactoryTest {
 					{Cell.DEAD, Cell.LIVING},
 					{Cell.LIVING, Cell.DEAD}
 				};
-		World fromArray = worldFactory.buildWorld(cells);
+		World fromArray = worldFactory.createWorld(cells);
 		assertEquals("Cell at 0,0 should be dead", cells[0][0], fromArray.getCellAt(0, 0));
 		assertEquals("Cell at 1,1 should be dead", cells[1][1], fromArray.getCellAt(1, 1));
 		assertEquals("Cell at 0,1 should be living", cells[0][1], fromArray.getCellAt(0, 1));
@@ -61,7 +61,7 @@ public class WorldAndFactoryTest {
 					{null}
 				};
 		// Null values should be stored as Cell.DEAD
-		World fromArray = worldFactory.buildWorld(cells);
+		World fromArray = worldFactory.createWorld(cells);
 		assertNotNull("World object should not contain null values", fromArray.getCellAt(0, 0));
 		assertEquals("null cells passed to WorldFactory should be converted to Cell.DEAD", Cell.DEAD, fromArray.getCellAt(0, 0));
 	}

@@ -12,7 +12,7 @@ public class ArrayWorldFactory implements WorldFactory {
 		return new ArrayWorld(length, height);
 	}
 
-	public World buildWorld(Cell[][] cells) {
+	public World createWorld(Cell[][] cells) {
 		return new ArrayWorld(cells);
 	}
 

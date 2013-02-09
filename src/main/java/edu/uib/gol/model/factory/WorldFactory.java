@@ -7,6 +7,6 @@ public interface WorldFactory {
 
 	public abstract World createWorld(int length, int height);
 
-	public abstract World buildWorld(Cell[][] cells);
+	public abstract World createWorld(Cell[][] cells);
 
 }

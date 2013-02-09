@@ -36,7 +36,7 @@ public class PrintWorldViewer implements WorldViewer{
         			{Cell.DEAD, Cell.LIVING},
         		};
        
-       worldViewer.drawWorld( worldFactory.buildWorld(cells));
+       worldViewer.drawWorld( worldFactory.createWorld(cells));
 	}
 
 }
