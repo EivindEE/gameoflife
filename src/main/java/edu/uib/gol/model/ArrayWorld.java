@@ -9,14 +9,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ArrayWorld implements World {
-	int width, height;
 	Cell[][] cells;
 	public ArrayWorld() {
 		
 	}
 	public ArrayWorld(int width, int height) {
-		this.width = width;
-		this.height = height;
 		this.cells = new Cell[width][height];
 		for(int i = 0; i < cells.length; i++) {
 			for (int j = 0; j < cells[i].length; j++) {
@@ -42,11 +39,11 @@ public class ArrayWorld implements World {
 	}
 	
 	public int getWidth() {
-		return width;
+		return cells.length;
 	}
 	
 	public int getHeight() {
-		return height;
+		return cells[0].length;
 	}
 	
 	public void setCellAt(int x, int y, Cell cell) {
