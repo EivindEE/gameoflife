@@ -31,8 +31,9 @@ public class PrintWorldViewer implements WorldViewer{
         WorldFactory worldFactory = context.getBean(WorldFactory.class);
         WorldViewer worldViewer = context.getBean(WorldViewer.class);
         Cell[][] cells = new Cell[][]{
-        			{Cell.LIVING},
-        			{Cell.DEAD}
+        			{Cell.LIVING, Cell.LIVING},
+        			{Cell.DEAD, Cell.DEAD},
+        			{Cell.DEAD, Cell.LIVING},
         		};
        
        worldViewer.drawWorld( worldFactory.buildWorld(cells));
