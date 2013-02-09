@@ -28,7 +28,8 @@ public class UniverseImpl implements Universe {
 					}
 					
 				} else {
-					if (world.numberOfAdjacentLivingCells(i, j) < 2) {
+					int adj = world.numberOfAdjacentLivingCells(i, j);
+					if (adj < 2 || adj > 3) {
 						newState[i][j] = Cell.DEAD;
 					} else {
 						newState[i][j] = Cell.LIVING;

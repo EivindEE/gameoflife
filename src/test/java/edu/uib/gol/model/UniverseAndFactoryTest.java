@@ -51,33 +51,33 @@ public class UniverseAndFactoryTest {
 	@Test
 	public void testTickRule1And4() {
 		Cell[][] initialState = new Cell[][] {
-				{Cell.DEAD, Cell.DEAD, Cell.DEAD},
-				{Cell.LIVING, Cell.LIVING, Cell.LIVING},
-				{Cell.DEAD, Cell.DEAD, Cell.DEAD},
+				{Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD},
+				{Cell.DEAD, Cell.LIVING, Cell.LIVING, Cell.LIVING},
+				{Cell.LIVING, Cell.LIVING, Cell.LIVING, Cell.DEAD},
+				{Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD},
 			};
 		World initialWorld = worldFactory.createWorld(initialState);
 		Universe universe = universeFactory.createUniverse(worldFactory, initialWorld);
 		viewer.drawWorld(universe.getWorld());
 		World tickedWorld = universe.tick();
 		viewer.drawWorld(universe.getWorld());
-		// Testing that the correct living cells have died
-		assertEquals("The cell at 1,0 had fewer than two live neighbours and should be dead", Cell.DEAD, tickedWorld.getCellAt(1, 0));
-		assertEquals("The cell at 1,1 has two live neighbours and should be alive", Cell.LIVING, tickedWorld.getCellAt(1, 1));
-		assertEquals("The cell at 1,2 had fewer than two live neighbours and should be dead", Cell.DEAD, tickedWorld.getCellAt(1, 2));
-		// Testing that the correct dead cells have come alive
-		assertEquals("The cell at 0,0 did not have exactly 3 neighbours and should stay dead",Cell.DEAD, tickedWorld.getCellAt(0, 0));
-		assertEquals("The cell at 0,1 had exactly 3 neighbours and should become alive",Cell.LIVING, tickedWorld.getCellAt(0, 1));
 		
+		// Testing Rule 2: Any live cell with two or three live neighbours lives on to the next generation.
+		assertEquals("The cell at 2,0 had 2 living neighbours and should stay alive", Cell.LIVING, tickedWorld.getCellAt(2, 0));
+		assertEquals("The cell at 1,3 had 2 living neighbours and should stay alive", Cell.LIVING, tickedWorld.getCellAt(1, 3));
+		
+		// Testing Rule 3: Any live cell with more than three live neighbours dies, as if by overcrowding.
+		assertEquals("The cell at 1,1 had 4 living neighbours and should be dead", Cell.DEAD, tickedWorld.getCellAt(1, 1));
+		assertEquals("The cell at 1,2 had 4 living neighbours and should be dead", Cell.DEAD, tickedWorld.getCellAt(1, 2));
+		assertEquals("The cell at 2,1 had 4 living neighbours and should be dead", Cell.DEAD, tickedWorld.getCellAt(2, 1));
+		assertEquals("The cell at 2,2 had 4 living neighbours and should be dead", Cell.DEAD, tickedWorld.getCellAt(2, 2));
+		
+		// Testing Rule 4: Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+		assertEquals("The cell at 0,3 had exactly 3 neighbours and should become alive",Cell.LIVING, tickedWorld.getCellAt(0, 2));
+		assertEquals("The cell at 0,0 had 1 neighbour and should stay dead",Cell.DEAD, tickedWorld.getCellAt(0, 0));
+		assertEquals("The cell at 0,1 had 2 neighbours and should stay dead",Cell.DEAD, tickedWorld.getCellAt(0, 1));
 		tickedWorld = universe.tick();
 		viewer.drawWorld(universe.getWorld());
-		
-		// Testing that the correct living cells have died
-		assertEquals("The cell at 0,1 had fewer than two live neighbours and should be dead", Cell.DEAD, tickedWorld.getCellAt(0, 1));
-		assertEquals("The cell at 1,1 has two live neighbours and should be alive", Cell.LIVING, tickedWorld.getCellAt(1, 1));
-		assertEquals("The cell at 2,1 had fewer than two live neighbours and should be dead", Cell.DEAD, tickedWorld.getCellAt(2, 1));
-		// Testing that the correct dead cells have come alive
-		assertEquals("The cell at 0,0 did not have exactly 3 neighbours and should stay dead",Cell.DEAD, tickedWorld.getCellAt(0, 0));
-		assertEquals("The cell at 1,0 had exactly 3 neighbours and should become alive",Cell.LIVING, tickedWorld.getCellAt(1, 0));
 
 	}
 
