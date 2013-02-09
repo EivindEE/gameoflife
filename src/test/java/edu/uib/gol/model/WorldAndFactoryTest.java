@@ -1,7 +1,6 @@
 package edu.uib.gol.model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
@@ -13,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import edu.uib.gol.model.Cell;
-import edu.uib.gol.model.World;
 import edu.uib.gol.model.factory.WorldFactory;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-context.xml")
@@ -25,6 +22,7 @@ public class WorldAndFactoryTest {
 	World defaultWorld;
 	int defaultWidth = 3;
 	int defaultHeight = 3;
+	int negativeNumber = -1;
 	
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
@@ -34,10 +32,24 @@ public class WorldAndFactoryTest {
 		defaultWorld = worldFactory.createWorld(defaultWidth, defaultHeight);
 	}
 	
+	
+	@Test
+	public void testCreateWorldNegativeWidth(){
+		exception.expect(IllegalArgumentException.class);
+		worldFactory.createWorld(negativeNumber, defaultHeight);
+	}
+	
+	@Test
+	public void testCreateWorldNegativeHeight(){
+		exception.expect(IllegalArgumentException.class);
+		worldFactory.createWorld(defaultWidth, negativeNumber);
+	}
+	
 	@Test
 	public void testDefaultCreateWorld() {
-		World world = worldFactory.createWorld(0,0);
-		assertTrue("The builder should return a World object ", world instanceof World);
+		World world = worldFactory.createWorld(defaultWidth, defaultHeight);
+		assertEquals("The width of the created world should match the parameter", defaultWidth, world.getWidth());
+		assertEquals("The height of the created world should match the parameter", defaultHeight, world.getHeight());
 	}
 	
 	@Test
