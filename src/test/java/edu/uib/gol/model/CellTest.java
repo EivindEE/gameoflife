@@ -1,4 +1,4 @@
-package edu.uib.gol;
+package edu.uib.gol.model;
 
 import static org.junit.Assert.*;
 import edu.uib.gol.model.Cell;
