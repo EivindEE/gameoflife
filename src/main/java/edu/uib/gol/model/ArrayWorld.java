@@ -46,10 +46,6 @@ public class ArrayWorld implements World{
 		return cells[0].length;
 	}
 	
-	public void setCellAt(int x, int y, Cell cell) {
-		this.cells[x][y] = cell;
-	}
-	
 	public int numberOfAdjacentLivingCells(int x, int y) {
 		int numberOfLivingCells = 0;
 		int xStart, xEnd, yStart, yEnd;
