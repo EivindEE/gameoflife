@@ -230,7 +230,7 @@ public class WorldAndFactoryTest {
 	}
 
 	@Test
-	public void testEquals() {
+	public void testEqualsState() {
 		Cell[][] cells = new Cell[][]{
 				{Cell.LIVING, Cell.DEAD},
 				{Cell.DEAD, Cell.LIVING},
@@ -248,6 +248,11 @@ public class WorldAndFactoryTest {
 		assertTrue("Two worlds with equal internal states should be equal", world.equals(sameWorld));
 		World differentWorld = worldFactory.createWorld(differentCells);
 		assertFalse("Two worlds with different internal states should be equal", world.equals(differentWorld));
-
+	}
+	
+	@Test
+	public void testEqualsBadArrgument(){
+		assertFalse("A world should not be equal to null", defaultWorld.equals(null));
+		assertFalse("A world should not be equal to an object of a different type", defaultWorld.equals(new Integer(0)));
 	}
 }
