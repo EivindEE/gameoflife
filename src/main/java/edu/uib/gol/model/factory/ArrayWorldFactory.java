@@ -20,8 +20,7 @@ public class ArrayWorldFactory implements WorldFactory {
 	}
 
 	public World createRandomWorld(int width, int height) {
-		// TODO Auto-generated method stub
-		return null;
+		return createWorld(width, height);
 	}
 
 }
