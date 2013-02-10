@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -18,9 +19,15 @@ import edu.uib.gol.model.factory.WorldFactory;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-context.xml")
 public class WorldAndFactoryTest {
-	@Autowired 
+	@Autowired
+	
+	@Qualifier("arrayWorldFactory")
 	WorldFactory worldFactory;
 
+	
+	@Qualifier("toroidalArrayWorldFactory")
+	WorldFactory toroidalWorldFactory;
+	
 	World defaultWorld;
 	int defaultWidth = 3;
 	int defaultHeight = 3;
