@@ -25,14 +25,6 @@ public interface World {
 	 * @return the height
 	 */
 	public abstract int getHeight();
-
-	/**
-	 * Sets the cell at <x,y> to the state of the {@link Cell} provided 
-	 * @param x, the index along the width axis
-	 * @param y, the index along the height axis
-	 * @param cell, the state the cell at <x,y> should have
-	 */
-	public abstract void setCellAt(int x, int y, Cell cell);
 	
 	/**
 	 * Returns the number of living adjacent cells for the cell at <x,y>

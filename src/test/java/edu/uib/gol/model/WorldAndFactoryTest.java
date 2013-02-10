@@ -20,46 +20,46 @@ import edu.uib.gol.model.factory.WorldFactory;
 public class WorldAndFactoryTest {
 	@Autowired 
 	WorldFactory worldFactory;
-	
+
 	World defaultWorld;
 	int defaultWidth = 3;
 	int defaultHeight = 3;
 	int negativeNumber = -1;
-	
+
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
-	
+
 	@Before
 	public void setUp() {
 		defaultWorld = worldFactory.createWorld(defaultWidth, defaultHeight);
 	}
-	
-	
+
+
 	@Test
 	public void testCreateWorldNegativeWidth(){
 		exception.expect(IllegalArgumentException.class);
 		worldFactory.createWorld(negativeNumber, defaultHeight);
 	}
-	
+
 	@Test
 	public void testCreateWorldNegativeHeight(){
 		exception.expect(IllegalArgumentException.class);
 		worldFactory.createWorld(defaultWidth, negativeNumber);
 	}
-	
+
 	@Test
 	public void testDefaultCreateWorld() {
 		World world = worldFactory.createWorld(defaultWidth, defaultHeight);
 		assertEquals("The width of the created world should match the parameter", defaultWidth, world.getWidth());
 		assertEquals("The height of the created world should match the parameter", defaultHeight, world.getHeight());
 	}
-	
+
 	@Test
 	public void testArrayCreateWorld() {
 		Cell[][] cells = new Cell[][] 
 				{
-					{Cell.DEAD, Cell.LIVING},
-					{Cell.LIVING, Cell.DEAD}
+				{Cell.DEAD, Cell.LIVING},
+				{Cell.LIVING, Cell.DEAD}
 				};
 		World fromArray = worldFactory.createWorld(cells);
 		assertEquals("Cell at 0,0 should be dead", cells[0][0], fromArray.getCellAt(0, 0));
@@ -67,20 +67,20 @@ public class WorldAndFactoryTest {
 		assertEquals("Cell at 0,1 should be living", cells[0][1], fromArray.getCellAt(0, 1));
 		assertEquals("Cell at 1,0 should be living", cells[1][0], fromArray.getCellAt(1, 0));
 	}
-	
+
 	@Test
 	public void testArrayCreateWorldNullValues() {
 		Cell[][] cells = new Cell[][] 
 				{
-					{null}
+				{null}
 				};
 		// Null values should be stored as Cell.DEAD
 		World fromArray = worldFactory.createWorld(cells);
 		assertNotNull("World object should not contain null values", fromArray.getCellAt(0, 0));
 		assertEquals("null cells passed to WorldFactory should be converted to Cell.DEAD", Cell.DEAD, fromArray.getCellAt(0, 0));
 	}
-	
-	
+
+
 	@Test
 	public void testWorldSize() {
 		assertEquals("The length of the universe should be the same as the length given",
@@ -88,14 +88,14 @@ public class WorldAndFactoryTest {
 		assertEquals("The height of the universe should be the same as the height given",
 				defaultHeight, defaultWorld.getHeight());
 		int newHeight = 10, 
-			newLength = 11;
+				newLength = 11;
 		World newWorld = worldFactory.createWorld(newLength, newHeight);
 		assertEquals("The length of the universe should be the same as the length given",
 				newLength, newWorld.getWidth());
 		assertEquals("The height of the universe should be the same as the height given",
 				newHeight, newWorld.getHeight());
 	}
-	
+
 	@Test
 	public void testInitialState() {
 		for( int i = 0; i < defaultWorld.getWidth(); i++) {
@@ -104,121 +104,131 @@ public class WorldAndFactoryTest {
 			}
 		}
 	}
-	
+
 	@Test
-	public void testGetAndSetCellAt() {
+	public void testGetCellAt() {
 		int x = 0,
-			y = 0;
-		assertEquals("The cell at x,y should be dead(Cell.DEAD) in an empty map", Cell.DEAD, defaultWorld.getCellAt(x, y));
-		defaultWorld.setCellAt(x, y, Cell.LIVING);
-		assertEquals("The cell at x,y should be living when set", Cell.LIVING, defaultWorld.getCellAt(x, y));
-		assertEquals("The cell at x,y + 1 should still be dead", Cell.DEAD, defaultWorld.getCellAt(x, y + 1));
-		assertEquals("The cell at x + 1,y should still be dead", Cell.DEAD, defaultWorld.getCellAt(x + 1, y));
+				y = 0;
+		Cell[][] deadGrid = new Cell[][]{{Cell.DEAD}};
+		Cell[][] livingGrid = new Cell[][]{{Cell.LIVING}};
+		World deadWorld = worldFactory.createWorld(deadGrid);
+		World livingWorld = worldFactory.createWorld(livingGrid);
+		assertEquals("The cell at x,y should be dead", Cell.DEAD, deadWorld.getCellAt(x, y));
+		assertEquals("The cell at x,y should be alive", Cell.LIVING, livingWorld.getCellAt(x, y));
 	}
-	
+
 	@Test
 	public void testGetCellAtHighHeightIndex() {
 		exception.expect(IndexOutOfBoundsException.class);
 		defaultWorld.getCellAt(0, defaultHeight);
 	}
-	
+
 	@Test
 	public void testGetCellAtNegativeHeightIndex() {
 		exception.expect(IndexOutOfBoundsException.class);
 		defaultWorld.getCellAt(0, -1);
 	}
-	
-	@Test
-	public void testSetCellAtHighHeightIndex() {
-		exception.expect(IndexOutOfBoundsException.class);
-		defaultWorld.setCellAt(0, defaultHeight, null);
-	}
-	
-	@Test
-	public void testSetCellAtNegativeHeightIndex() {
-		exception.expect(IndexOutOfBoundsException.class);
-		defaultWorld.setCellAt(0, -1, null);
-	}
-	
+
+
 	@Test
 	public void testGetCellAtHighWidthIndex() {
 		exception.expect(IndexOutOfBoundsException.class);
 		defaultWorld.getCellAt(defaultWidth, 0);
 	}
-	
+
 	@Test
 	public void testGetCellAtNegativeWidthIndex() {
 		exception.expect(IndexOutOfBoundsException.class);
 		defaultWorld.getCellAt(-1, 0);
 	}
-	
-	@Test
-	public void testSetCellAtHighWidthIndex() {
-		exception.expect(IndexOutOfBoundsException.class);
-		defaultWorld.setCellAt(defaultWidth, 0, null);
-	}
-	
-	@Test
-	public void testSetCellAtNegativeWidthIndex() {
-		exception.expect(IndexOutOfBoundsException.class);
-		defaultWorld.setCellAt(-1, 0, null);
-	}
-	
+
 	@Test
 	public void testNumberOfLivingAdjacentCells(){
 		int x = 1, y = 1, numberOfLivingAdjacentCells = 0;
-		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells + " when all cells are dead", numberOfLivingAdjacentCells, defaultWorld.numberOfAdjacentLivingCells(x,y));
-		defaultWorld.setCellAt(x + 1, y, Cell.LIVING);
+		Cell[][] cells = new Cell[][] {
+				{Cell.DEAD, Cell.DEAD, Cell.DEAD},
+				{Cell.DEAD, Cell.DEAD, Cell.DEAD},
+				{Cell.DEAD, Cell.DEAD, Cell.DEAD}
+		};
+		World world = worldFactory.createWorld(cells);
+		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells + " when all cells are dead", 
+				numberOfLivingAdjacentCells, world.numberOfAdjacentLivingCells(x,y));
+		cells[0][0] = Cell.LIVING;
+		world = worldFactory.createWorld(cells);
 		numberOfLivingAdjacentCells++;
-		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells + " when cells at x + 1 is living and the rest are dead", numberOfLivingAdjacentCells, defaultWorld.numberOfAdjacentLivingCells(x,y));
-		defaultWorld.setCellAt(x - 1, y, Cell.LIVING);
+		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells, 
+				numberOfLivingAdjacentCells, world.numberOfAdjacentLivingCells(x,y));
+		cells[0][1] = Cell.LIVING;
+		world = worldFactory.createWorld(cells);
 		numberOfLivingAdjacentCells++;
-		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells + " when cells at x + 1 and x -1 is living and the rest are dead", numberOfLivingAdjacentCells, defaultWorld.numberOfAdjacentLivingCells(x,y));
-		defaultWorld.setCellAt(x, y + 1, Cell.LIVING);
+		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells,
+				numberOfLivingAdjacentCells, world.numberOfAdjacentLivingCells(x,y));
+		cells[0][2] = Cell.LIVING;
+		world = worldFactory.createWorld(cells);
 		numberOfLivingAdjacentCells++;
-		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells + " when cells at x + 1, x - 1, and y + 1 is living and the rest are dead", numberOfLivingAdjacentCells, defaultWorld.numberOfAdjacentLivingCells(x,y));
-		defaultWorld.setCellAt(x, y - 1, Cell.LIVING);
+		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells,
+				numberOfLivingAdjacentCells, world.numberOfAdjacentLivingCells(x,y));
+		cells[1][0] = Cell.LIVING;
+		world = worldFactory.createWorld(cells);
 		numberOfLivingAdjacentCells++;
-		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells + " when cells at x + 1, x - 1, y + 1 and y - 1 is living and the rest are dead", numberOfLivingAdjacentCells, defaultWorld.numberOfAdjacentLivingCells(x,y));
-		defaultWorld.setCellAt(x - 1, y - 1, Cell.LIVING);
+		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells,
+				numberOfLivingAdjacentCells, world.numberOfAdjacentLivingCells(x,y));
+		cells[1][2] = Cell.LIVING;
+		world = worldFactory.createWorld(cells);
 		numberOfLivingAdjacentCells++;
-		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells + " when cells at x + 1, x - 1, y + 1, y - 1, x-1 & y-1 is living and the rest are dead", numberOfLivingAdjacentCells, defaultWorld.numberOfAdjacentLivingCells(x,y));
-		defaultWorld.setCellAt(x + 1, y + 1, Cell.LIVING);
+		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells, 
+				numberOfLivingAdjacentCells, world.numberOfAdjacentLivingCells(x,y));
+		cells[2][0] = Cell.LIVING;
+		world = worldFactory.createWorld(cells);
 		numberOfLivingAdjacentCells++;
-		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells + " when cells at x + 1, x - 1, y + 1, y - 1, x - 1 & y - 1, and x + 1 & y + 1 is living and the rest are dead", numberOfLivingAdjacentCells, defaultWorld.numberOfAdjacentLivingCells(x,y));
-		defaultWorld.setCellAt(x, y, Cell.LIVING);
-		assertEquals("The state of the cell should not affec the number of adjacent cells", numberOfLivingAdjacentCells, defaultWorld.numberOfAdjacentLivingCells(x,y));
-		
+		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells,
+				numberOfLivingAdjacentCells, world.numberOfAdjacentLivingCells(x,y));
+		cells[2][1] = Cell.LIVING;
+		world = worldFactory.createWorld(cells);
+		numberOfLivingAdjacentCells++;
+		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells, 
+				numberOfLivingAdjacentCells, world.numberOfAdjacentLivingCells(x,y));
+		cells[2][2] = Cell.LIVING;
+		world = worldFactory.createWorld(cells);
+		numberOfLivingAdjacentCells++;
+		assertEquals("Number of living adjacent cells should be " + numberOfLivingAdjacentCells, 
+				numberOfLivingAdjacentCells, world.numberOfAdjacentLivingCells(x,y));
+
+		cells[1][1] = Cell.LIVING;
+		world = worldFactory.createWorld(cells);
+		assertEquals("The state of the cell should not affect the number of adjacent cells", 
+				numberOfLivingAdjacentCells, world.numberOfAdjacentLivingCells(x,y));
+
 		// Counting in corners should not throw out of bounds exceptions
 		defaultWorld.numberOfAdjacentLivingCells(0, 0);
 		defaultWorld.numberOfAdjacentLivingCells(defaultWidth - 1, defaultHeight - 1);
 
 	}
-	
+
 	@Test
 	public void testNumberOfLivingAdjacentCellsHighWidthIndex() {
 		exception.expect(IndexOutOfBoundsException.class);
 		defaultWorld.numberOfAdjacentLivingCells(defaultWidth, 0);
 	}
-	
+
 	@Test
 	public void testNumberOfLivingAdjacentCellsNegativeWidthIndex() {
 		exception.expect(IndexOutOfBoundsException.class);
 		defaultWorld.numberOfAdjacentLivingCells(-1, 0);
 	}
-	
+
 	@Test
 	public void testNumberOfLivingAdjacentCellsHighHeightIndex() {
 		exception.expect(IndexOutOfBoundsException.class);
 		defaultWorld.numberOfAdjacentLivingCells(0, defaultHeight);
 	}
-	
+
 	@Test
 	public void testNumberOfLivingAdjacentCellsNegativeHeightIndex() {
 		exception.expect(IndexOutOfBoundsException.class);
 		defaultWorld.numberOfAdjacentLivingCells(0, -1);
 	}
-	
+
 	@Test
 	public void testEquals() {
 		Cell[][] cells = new Cell[][]{
@@ -238,6 +248,6 @@ public class WorldAndFactoryTest {
 		assertTrue("Two worlds with equal internal states should be equal", world.equals(sameWorld));
 		World differentWorld = worldFactory.createWorld(differentCells);
 		assertFalse("Two worlds with different internal states should be equal", world.equals(differentWorld));
-		
+
 	}
 }
