@@ -23,8 +23,6 @@ public class UniverseAndFactoryTest {
 
 	@Autowired
 	WorldFactory worldFactory;
-	@Autowired 
-	WorldViewer viewer;
 	
 	// Two step oscillator http://upload.wikimedia.org/wikipedia/commons/1/12/Game_of_life_toad.gif
 	// Step 1
@@ -83,9 +81,7 @@ public class UniverseAndFactoryTest {
 		World tickedWorld = universe.tick();
 		// After the first tick the cell at 1,0 should be alive
 		// Testing Rule 1: Any live cell with fewer than two live neighbours dies, as if caused by under-population.
-		viewer.drawWorld(tickedWorld);
 		tickedWorld = universe.tick();
-		viewer.drawWorld(tickedWorld);
 		assertEquals("The Cell at 2,1 had 1 neighbour and should be dead", Cell.DEAD, tickedWorld.getCellAt(2, 1));
 	}
 
