@@ -19,4 +19,9 @@ public class ArrayWorldFactory implements WorldFactory {
 		return new ArrayWorld(cells);
 	}
 
+	public World createRandomWorld(int width, int height) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -251,8 +251,15 @@ public class WorldAndFactoryTest {
 	}
 	
 	@Test
-	public void testEqualsBadArrgument(){
+	public void testEqualsBadArgument() {
 		assertFalse("A world should not be equal to null", defaultWorld.equals(null));
 		assertFalse("A world should not be equal to an object of a different type", defaultWorld.equals(new Integer(0)));
+	}
+	
+	@Test
+	public void testCreateRandomWorld() {
+		int width = 500, height = 300;
+		World world = worldFactory.createRandomWorld(width, height);
+		assertNotNull("It should not return null", world);
 	}
 }

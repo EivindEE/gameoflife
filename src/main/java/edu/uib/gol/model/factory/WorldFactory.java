@@ -24,5 +24,13 @@ public interface WorldFactory {
 	 * @return a new {@link World} object
 	 */
 	public abstract World createWorld(Cell[][] cells);
+	
+	/**
+	 * Creates a new {@link World} with a random collection of {@link Cell}s 
+	 * @param width, the width of the world
+	 * @param height, the height of the world
+	 * @return a new {@link World} object
+	 */
+	public abstract World createRandomWorld(int width, int height);
 
 }
