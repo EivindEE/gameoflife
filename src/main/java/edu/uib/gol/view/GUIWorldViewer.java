@@ -43,6 +43,7 @@ public class GUIWorldViewer extends JFrame implements WorldViewer  {
 			cellXY--;
 			cellDimension = new Dimension(cellXY, cellXY);
 		}
+		this.setSize(new Dimension((int) cellDimension.getHeight() * grid[0].length, (int) cellDimension.getWidth() * grid.length));
 		for(int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid[i].length; j++) {
 				grid[i][j] = new JPanel(new BorderLayout());
@@ -51,9 +52,7 @@ public class GUIWorldViewer extends JFrame implements WorldViewer  {
 				this.add(grid[i][j]);
 			}
 		}
-		Dimension size = new Dimension((int) cellDimension.getWidth() * grid.length, (int) cellDimension.height * grid[0].length);
-		this.setSize(size);
-		this.setPreferredSize(size);
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
