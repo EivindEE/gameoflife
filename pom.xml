@@ -49,10 +49,11 @@
 				<configuration>
 					<formats>
 						<format>xml</format>
+						<format>html</format>
 					</formats>
 					<instrumentation>
 						<excludes>
-							<exclude>edu/uib/gol/Main*.java</exclude>
+							<exclude>edu/uib/gol/Main*.class</exclude>
 						</excludes>
 					</instrumentation>
 				</configuration>
