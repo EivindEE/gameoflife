@@ -19,15 +19,8 @@ public class Main {
         WorldFactory worldFactory = context.getBean(WorldFactory.class);
         UniverseFactory universeFactory = context.getBean(UniverseFactory.class);
         
-        Cell[][] cells = new Cell[][] {
-    			{Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD},
-    			{Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD},
-    			{Cell.DEAD, Cell.DEAD, Cell.LIVING, Cell.LIVING, Cell.LIVING, Cell.DEAD},
-    			{Cell.DEAD, Cell.LIVING, Cell.LIVING, Cell.LIVING, Cell.DEAD, Cell.DEAD},
-    			{Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD},
-    			{Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD}
-    	};
-        World world = worldFactory.createRandomWorld(10, 10);
+  
+        World world = worldFactory.createWorld(ManyWorlds.LWSS);
         Universe universe = universeFactory.createUniverse(worldFactory, world);
         GUIWorldViewer worldViewer = new GUIWorldViewer(universe);
 		worldViewer.init();
