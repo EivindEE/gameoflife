@@ -1,12 +1,8 @@
 package edu.uib.gol.view;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
-import edu.uib.gol.model.Cell;
 import edu.uib.gol.model.World;
-import edu.uib.gol.model.factory.WorldFactory;
 
 
 @Component
@@ -24,19 +20,4 @@ public class PrintWorldViewer implements WorldViewer{
 		}
 		System.out.println(builder);
 	}
-	
-	
-	public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("main-context.xml");
-        WorldFactory worldFactory = context.getBean(WorldFactory.class);
-        WorldViewer worldViewer = context.getBean(WorldViewer.class);
-        Cell[][] cells = new Cell[][]{
-        			{Cell.LIVING, Cell.LIVING},
-        			{Cell.DEAD, Cell.DEAD},
-        			{Cell.DEAD, Cell.LIVING},
-        		};
-       
-       worldViewer.drawWorld( worldFactory.createWorld(cells));
-	}
-
 }

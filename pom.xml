@@ -50,6 +50,11 @@
 					<formats>
 						<format>xml</format>
 					</formats>
+					<instrumentation>
+						<excludes>
+							<exclude>edu/uib/gol/Main*.java</exclude>
+						</excludes>
+					</instrumentation>
 				</configuration>
 				<version>${cobertura.version}</version>
 			</plugin>
