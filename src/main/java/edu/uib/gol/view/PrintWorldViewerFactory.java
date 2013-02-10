@@ -1,6 +1,5 @@
 package edu.uib.gol.view;
 
-import java.io.OutputStream;
 import java.io.PrintStream;
 
 import org.apache.commons.lang.Validate;

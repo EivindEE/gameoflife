@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import edu.uib.gol.model.Cell;
 import edu.uib.gol.model.Universe;
 import edu.uib.gol.model.World;
 import edu.uib.gol.model.factory.UniverseFactory;
@@ -39,13 +40,13 @@ public class PrintWorldViewerAndFactoryTest {
 	
 	protected Universe universe;
 
-	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+	private ByteArrayOutputStream outContent;
 	
 	@Before
 	public void setUp() {
 		World world = worldFactory.createWorld(0, 0);
 		universe = universeFactory.createUniverse(worldFactory, world);
-		System.setOut(new PrintStream(outContent));
+		outContent = new ByteArrayOutputStream();
 	}
 	
 	@Test
@@ -64,9 +65,26 @@ public class PrintWorldViewerAndFactoryTest {
 	@Test
 	public void testDrawWorldEmpty() {
 		String expected = "";
-		PrintWorldViewer worldViewer = viewFactory.createWorldViewer(universe);
+		PrintStream actual = new PrintStream(outContent);
+		PrintWorldViewer worldViewer = viewFactory.createWorldViewer(universe, actual);
 		worldViewer.drawWorld();
 		assertEquals("An empty world should give an empty string", expected, outContent.toString());
+	}
+	
+	@Test
+	public void testDrawWorld(){
+		Cell[][] grid = new Cell[][] {
+				{Cell.LIVING, Cell.DEAD},
+				{Cell.DEAD, Cell.LIVING}
+		};
+		World world = worldFactory.createWorld(grid);
+		Universe universe = universeFactory.createUniverse(worldFactory, world);
+		
+		PrintStream actual = new PrintStream(outContent);
+		PrintWorldViewer worldViewer = viewFactory.createWorldViewer(universe, actual);
+		String expected = "|*| |\n| |*|\n";
+		worldViewer.drawWorld();
+		assertEquals(expected, outContent.toString());
 	}
 
 }
