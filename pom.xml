@@ -54,6 +54,8 @@
 					<instrumentation>
 						<excludes>
 							<exclude>edu/uib/gol/Main*.class</exclude>
+							<exclude>edu/uib/gol/Config*.class</exclude>
+							<exclude>edu/uib/gol/ManyWorlds*.class</exclude>
 						</excludes>
 					</instrumentation>
 				</configuration>
