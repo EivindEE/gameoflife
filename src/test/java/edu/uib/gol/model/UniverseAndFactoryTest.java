@@ -2,6 +2,7 @@ package edu.uib.gol.model;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -24,6 +25,21 @@ public class UniverseAndFactoryTest {
 	WorldFactory worldFactory;
 	@Autowired 
 	WorldViewer viewer;
+	// http://upload.wikimedia.org/wikipedia/commons/1/12/Game_of_life_toad.gif
+	protected Cell[][] initial4x4 = new Cell[][] {
+			{Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD},
+			{Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD},
+			{Cell.DEAD, Cell.DEAD, Cell.LIVING, Cell.LIVING, Cell.LIVING, Cell.DEAD},
+			{Cell.DEAD, Cell.LIVING, Cell.LIVING, Cell.LIVING, Cell.DEAD, Cell.DEAD},
+			{Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD},
+			{Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD}
+		};
+	protected Universe universe;
+	@Before 
+	public void setUp() {
+		World initialWorld = worldFactory.createWorld(initial4x4);
+		universe = universeFactory.createUniverse(worldFactory, initialWorld);
+	}
 	
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
@@ -47,38 +63,43 @@ public class UniverseAndFactoryTest {
 		Universe universe = universeFactory.createUniverse(worldFactory, world);
 		assertEquals("The universe should have the provided world as its initial world", world, universe.getWorld());
 	}
-	// Testing the rules 1 and 4 (http://en.wikipedia.org/wiki/Conway's_Game_of_Life#Rules)
+	
 	@Test
-	public void testTickRule1And4() {
-		Cell[][] initialState = new Cell[][] {
-				{Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD},
-				{Cell.DEAD, Cell.LIVING, Cell.LIVING, Cell.LIVING},
-				{Cell.LIVING, Cell.LIVING, Cell.LIVING, Cell.DEAD},
-				{Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD},
-			};
-		World initialWorld = worldFactory.createWorld(initialState);
-		Universe universe = universeFactory.createUniverse(worldFactory, initialWorld);
-		viewer.drawWorld(universe.getWorld());
+	public void testTickRule1() {
 		World tickedWorld = universe.tick();
-		viewer.drawWorld(universe.getWorld());
-		
+		// After the first tick the cell at 1,0 should be alive
+		// Testing Rule 1: Any live cell with fewer than two live neighbours dies, as if caused by under-population.
+		tickedWorld = universe.tick();
+		viewer.drawWorld(tickedWorld);
+		assertEquals("The Cell at 2,1 had 1 neighbour and should be dead", Cell.DEAD, tickedWorld.getCellAt(2, 1));
+	}
+	
+	@Test
+	public void testTickRule2() {
+		World tickedWorld = universe.tick();
 		// Testing Rule 2: Any live cell with two or three live neighbours lives on to the next generation.
-		assertEquals("The cell at 2,0 had 2 living neighbours and should stay alive", Cell.LIVING, tickedWorld.getCellAt(2, 0));
-		assertEquals("The cell at 1,3 had 2 living neighbours and should stay alive", Cell.LIVING, tickedWorld.getCellAt(1, 3));
+		assertEquals("The cell at 3,1 had 2 living neighbours and should stay alive", Cell.LIVING, tickedWorld.getCellAt(3, 1));
+		assertEquals("The cell at 2,4 had 2 living neighbours and should stay alive", Cell.LIVING, tickedWorld.getCellAt(2, 4));
+	}
+	
+	public void testTickRule3() {
+		World tickedWorld = universe.tick();
 		
 		// Testing Rule 3: Any live cell with more than three live neighbours dies, as if by overcrowding.
-		assertEquals("The cell at 1,1 had 4 living neighbours and should be dead", Cell.DEAD, tickedWorld.getCellAt(1, 1));
-		assertEquals("The cell at 1,2 had 4 living neighbours and should be dead", Cell.DEAD, tickedWorld.getCellAt(1, 2));
-		assertEquals("The cell at 2,1 had 4 living neighbours and should be dead", Cell.DEAD, tickedWorld.getCellAt(2, 1));
 		assertEquals("The cell at 2,2 had 4 living neighbours and should be dead", Cell.DEAD, tickedWorld.getCellAt(2, 2));
+		assertEquals("The cell at 2,3 had 4 living neighbours and should be dead", Cell.DEAD, tickedWorld.getCellAt(2, 2));
+		assertEquals("The cell at 3,2 had 4 living neighbours and should be dead", Cell.DEAD, tickedWorld.getCellAt(3, 2));
+		assertEquals("The cell at 3,3 had 4 living neighbours and should be dead", Cell.DEAD, tickedWorld.getCellAt(3, 3));
+	}
+	
+	public void testTickRule4() {
+		World tickedWorld = universe.tick();
 		
 		// Testing Rule 4: Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
-		assertEquals("The cell at 0,3 had exactly 3 neighbours and should become alive",Cell.LIVING, tickedWorld.getCellAt(0, 2));
-		assertEquals("The cell at 0,0 had 1 neighbour and should stay dead",Cell.DEAD, tickedWorld.getCellAt(0, 0));
-		assertEquals("The cell at 0,1 had 2 neighbours and should stay dead",Cell.DEAD, tickedWorld.getCellAt(0, 1));
-		tickedWorld = universe.tick();
-		viewer.drawWorld(universe.getWorld());
-
+		assertEquals("The cell at 1,3 had exactly 3 neighbours and should become alive",Cell.LIVING, tickedWorld.getCellAt(1, 3));
+		assertEquals("The cell at 2,1 had exactly 3 neighbours and should become alive",Cell.LIVING, tickedWorld.getCellAt(2, 1));
+		assertEquals("The cell at 1,1 had 1 neighbour and should stay dead",Cell.DEAD, tickedWorld.getCellAt(1, 1));
+		assertEquals("The cell at 1,2 had 2 neighbours and should stay dead",Cell.DEAD, tickedWorld.getCellAt(1, 2));
 	}
 
 }
