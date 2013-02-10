@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import edu.uib.gol.Config;
 import edu.uib.gol.model.ArrayWorld;
 import edu.uib.gol.model.Cell;
+import edu.uib.gol.model.ToroidalArrayWorld;
 import edu.uib.gol.model.World;
 
 @Component
@@ -15,7 +16,8 @@ public class ArrayWorldFactory implements WorldFactory {
 	public World createWorld(int width, int height) {
 		Validate.isTrue(width >= 0, "Width must be a non negative number");
 		Validate.isTrue(height >= 0, "Height must be a non negative number");
-		return new ArrayWorld(width, height);
+		Cell[][] cells = new Cell[width][height];
+		return createWorld(cells);
 	}
 
 	public World createWorld(Cell[][] cells) {
@@ -32,5 +34,4 @@ public class ArrayWorldFactory implements WorldFactory {
 		}
 		return createWorld(cells);
 	}
-
 }
