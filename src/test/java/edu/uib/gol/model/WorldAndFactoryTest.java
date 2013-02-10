@@ -261,5 +261,7 @@ public class WorldAndFactoryTest {
 		int width = 500, height = 300;
 		World world = worldFactory.createRandomWorld(width, height);
 		assertNotNull("It should not return null", world);
+		assertEquals("Width should match the provided parameter", width, world.getWidth());
+		assertEquals("Height should match the provided parameter", height, world.getHeight());
 	}
 }
