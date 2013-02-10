@@ -27,14 +27,14 @@ public class Main {
     			{Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD},
     			{Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD, Cell.DEAD}
     	};
-        World world = worldFactory.createWorld(cells);
+        World world = worldFactory.createRandomWorld(10, 10);
         Universe universe = universeFactory.createUniverse(worldFactory, world);
         GUIWorldViewer worldViewer = new GUIWorldViewer(universe);
 		worldViewer.init();
         while(true) {
-        	universe.tick();
         	worldViewer.drawWorld();
         	Thread.sleep(500);
+        	universe.tick();
         }
         
 	}
