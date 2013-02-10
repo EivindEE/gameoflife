@@ -29,7 +29,7 @@ public class Main {
         World world = worldFactory.createWorld(cells);
         Universe universe = universeFactory.createUniverse(worldFactory, world);
         for (int i = 0; i < 100; i++) {
-        	worldViewer.drawWorld(universe.tick());
+        	worldViewer.drawWorld();
         	Thread.sleep(1000);
 		}
 	}
