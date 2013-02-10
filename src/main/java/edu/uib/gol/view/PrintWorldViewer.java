@@ -1,12 +1,17 @@
 package edu.uib.gol.view;
 
+import java.io.OutputStream;
+import java.io.PrintStream;
+
 import edu.uib.gol.model.Universe;
 
 
 public class PrintWorldViewer implements WorldViewer{
 	private Universe universe;
-	public PrintWorldViewer(Universe universe) {
+	private PrintStream out;
+	public PrintWorldViewer(Universe universe, PrintStream out) {
 		this.universe = universe;
+		this.out = out;
 	}
 	public void drawWorld() {
 		StringBuilder builder = new StringBuilder();
@@ -18,6 +23,6 @@ public class PrintWorldViewer implements WorldViewer{
 			}
 			builder.append('\n');
 		}
-		System.out.print(builder);
+		out.print(builder);
 	}
 }
