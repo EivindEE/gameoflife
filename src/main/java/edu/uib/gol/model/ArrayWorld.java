@@ -60,17 +60,9 @@ public class ArrayWorld implements World{
 				if (!(i == 0 && j == 0)) {
 					xPos = x + i;
 					yPos = y + j;
-					if ( xPos >= cells.length) {
-						xPos = 0;
-					} else if (xPos < 0) {
-						xPos = cells.length - 1;
+					if ( !(xPos >= cells.length || xPos < 0 || yPos >= cells[xPos].length || yPos < 0)) {
+						numberOfLivingCells += this.getCellAt(xPos, yPos) == Cell.LIVING ? 1 : 0;
 					}
-					if ( yPos >= cells[xPos].length) {
-						yPos = 0;
-					} else if (yPos < 0) {
-						yPos = cells[xPos].length - 1;
-					}
-					numberOfLivingCells += this.getCellAt(xPos, yPos) == Cell.LIVING ? 1 : 0;
 				}
 			}
 		}
