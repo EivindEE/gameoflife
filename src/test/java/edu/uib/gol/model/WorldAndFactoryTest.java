@@ -207,25 +207,25 @@ public class WorldAndFactoryTest {
 
 	@Test
 	public void testNumberOfLivingAdjacentCellsHighWidthIndex() {
-		exception.expect(IndexOutOfBoundsException.class);
+		exception.expect(IllegalArgumentException.class);
 		defaultWorld.numberOfAdjacentLivingCells(defaultWidth, 0);
 	}
 
 	@Test
 	public void testNumberOfLivingAdjacentCellsNegativeWidthIndex() {
-		exception.expect(IndexOutOfBoundsException.class);
+		exception.expect(IllegalArgumentException.class);
 		defaultWorld.numberOfAdjacentLivingCells(-1, 0);
 	}
 
 	@Test
 	public void testNumberOfLivingAdjacentCellsHighHeightIndex() {
-		exception.expect(IndexOutOfBoundsException.class);
+		exception.expect(IllegalArgumentException.class);
 		defaultWorld.numberOfAdjacentLivingCells(0, defaultHeight);
 	}
 
 	@Test
 	public void testNumberOfLivingAdjacentCellsNegativeHeightIndex() {
-		exception.expect(IndexOutOfBoundsException.class);
+		exception.expect(IllegalArgumentException.class);
 		defaultWorld.numberOfAdjacentLivingCells(0, -1);
 	}
 
