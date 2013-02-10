@@ -5,9 +5,9 @@ import java.util.Random;
 import org.apache.commons.lang.Validate;
 import org.springframework.stereotype.Component;
 
+import edu.uib.gol.Config;
 import edu.uib.gol.model.ArrayWorld;
 import edu.uib.gol.model.Cell;
-import edu.uib.gol.model.Config;
 import edu.uib.gol.model.World;
 
 @Component
