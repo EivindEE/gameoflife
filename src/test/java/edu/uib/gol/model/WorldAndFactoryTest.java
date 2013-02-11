@@ -20,11 +20,10 @@ import edu.uib.gol.model.factory.WorldFactory;
 @ContextConfiguration("classpath:test-context.xml")
 public class WorldAndFactoryTest {
 	@Autowired
-	
 	@Qualifier("arrayWorldFactory")
 	WorldFactory worldFactory;
 
-	
+	@Autowired
 	@Qualifier("toroidalArrayWorldFactory")
 	WorldFactory toroidalWorldFactory;
 	
@@ -59,6 +58,12 @@ public class WorldAndFactoryTest {
 		World world = worldFactory.createWorld(defaultWidth, defaultHeight);
 		assertEquals("The width of the created world should match the parameter", defaultWidth, world.getWidth());
 		assertEquals("The height of the created world should match the parameter", defaultHeight, world.getHeight());
+	}
+	
+	@Test
+	public void testCreateToroidalWorld() {
+		World world = toroidalWorldFactory.createRandomWorld(3, 3);
+		assertTrue("Should return a torroidal world", world instanceof ToroidalArrayWorld);
 	}
 
 	@Test
@@ -210,6 +215,25 @@ public class WorldAndFactoryTest {
 		defaultWorld.numberOfAdjacentLivingCells(0, 0);
 		defaultWorld.numberOfAdjacentLivingCells(defaultWidth - 1, defaultHeight - 1);
 
+	}
+	
+	@Test
+	public void testToroidalAdjacent() {
+		Cell[][] toroidalGrid = new Cell[][] {
+			{Cell.DEAD, Cell.DEAD, Cell.DEAD},
+			{Cell.DEAD, Cell.DEAD, Cell.DEAD},
+			{Cell.DEAD, Cell.DEAD, Cell.LIVING}
+		};
+		World toroidalWorld = toroidalWorldFactory.createWorld(toroidalGrid);
+		for (int i = 0; i < toroidalWorld.getWidth(); i++) {
+			for (int j = 0; j < toroidalWorld.getHeight(); j++) {
+				if (i == 2 && j == 2) {
+					assertEquals("The cell at <" + i + "," + j + "> shouldn't have any living adjacent cells", 0, toroidalWorld.numberOfAdjacentLivingCells(i, j));
+				} else {
+					assertEquals("The cell at <" + i + "," + j + "> should have 1 living adjacent cell", 1, toroidalWorld.numberOfAdjacentLivingCells(i, j));
+				}
+			}
+		}
 	}
 
 	@Test
