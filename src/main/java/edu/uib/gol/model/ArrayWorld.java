@@ -78,8 +78,6 @@ public class ArrayWorld implements World{
 		if (getClass() != obj.getClass())
 			return false;
 		ArrayWorld other = (ArrayWorld) obj;
-		if (!Arrays.deepEquals(cells, other.cells))
-			return false;
-		return true;
+		return Arrays.deepEquals(cells, other.cells);
 	}
 }
