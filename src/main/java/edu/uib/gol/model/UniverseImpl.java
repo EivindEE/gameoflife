@@ -40,4 +40,8 @@ public class UniverseImpl implements Universe {
 		world = worldFactory.createWorld(newState); 
 		return world; 
 	}
+
+	public void setWorld(World world) {
+		this.world = world;
+	}
 }

@@ -25,4 +25,6 @@ public interface Universe {
 	 */
 	public abstract World tick();
 
+	public abstract void setWorld(World world);
+
 }

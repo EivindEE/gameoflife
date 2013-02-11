@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -22,6 +23,7 @@ public class UniverseAndFactoryTest {
 	UniverseFactory universeFactory;
 
 	@Autowired
+	@Qualifier("arrayWorldFactory")
 	WorldFactory worldFactory;
 	
 	// Two step oscillator http://upload.wikimedia.org/wikipedia/commons/1/12/Game_of_life_toad.gif
@@ -45,6 +47,7 @@ public class UniverseAndFactoryTest {
 	};
 	protected Universe universe;
 	protected World expected5x5World;
+	
 	@Before 
 	public void setUp() {
 		World initialWorld = worldFactory.createWorld(initial5x5);
@@ -74,6 +77,14 @@ public class UniverseAndFactoryTest {
 		World world = worldFactory.createWorld(0,0);
 		Universe universe = universeFactory.createUniverse(worldFactory, world);
 		assertEquals("The universe should have the provided world as its initial world", world, universe.getWorld());
+	}
+	
+	@Test
+	public void testSetWorld(){
+		World world = worldFactory.createWorld(6, 6);
+		assertFalse("The world we created should be different from the current one in the universe", universe.getWorld().equals(world));
+		universe.setWorld(world);
+		assertTrue("The worlds should be equal", universe.getWorld().equals(world));
 	}
 
 	@Test
