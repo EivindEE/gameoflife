@@ -2,8 +2,11 @@ package edu.uib.gol.view;
 
 import static org.junit.Assert.*;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+
+import javax.swing.CellRendererPane;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -15,6 +18,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import edu.uib.gol.model.Cell;
 import edu.uib.gol.model.Universe;
 import edu.uib.gol.model.World;
 import edu.uib.gol.model.factory.UniverseFactory;
@@ -44,7 +48,7 @@ public class WorldViewerPanelAndFactoryTest {
 	
 	@Before
 	public void setUp() {
-		World world = worldFactory.createWorld(500, 500);
+			World world = worldFactory.createWorld(2, 2);
 		universe = universeFactory.createUniverse(worldFactory, world);
 	}
 	
@@ -62,6 +66,53 @@ public class WorldViewerPanelAndFactoryTest {
 		viewer.init();
 		assertTrue("The panel is wider that the screen", viewer.getWidth() <= screenSize.width);
 		assertTrue("The panel is heigher that the screen", viewer.getHeight() <= screenSize.height);
+	}
+	
+	@Test
+	public void testGetAndSetLivingColor(){
+		WorldViewerPanel viewer = panelFactory.createWorldViewerPanel(universe);
+		Color c1 = Color.BLACK;
+		assertNotNull("The default color should not be null", viewer.getLivingColor());
+		viewer.setLivingColor(c1);
+		assertEquals(c1, viewer.getLivingColor());
+	}
+	
+	@Test
+	public void testGetAndSetDeadColor(){
+		WorldViewerPanel viewer = panelFactory.createWorldViewerPanel(universe);
+		Color c1 = Color.BLACK;
+		assertNotNull("The default color should not be null", viewer.getDeadColor());
+		viewer.setDeadColor(c1);
+		assertEquals(c1, viewer.getDeadColor());
+		Color c2 = Color.BLUE;
+		viewer.setDeadColor(c2);
+		assertEquals(c2, viewer.getDeadColor());
+	}
+	
+	@Test
+	public void testDrawWorld() {
+		Cell[][] cells = new Cell[][]{
+				{Cell.LIVING, Cell.DEAD},
+				{Cell.DEAD, Cell.LIVING},
+			};
+		Integer numberOfLivingCells = 0;
+		Integer numberOfDeadCells = 0;
+		for (int i = 0; i < cells.length; i++) {
+			for (int j = 0; j < cells[i].length; j++) {
+				if (cells[i][j] == Cell.LIVING) {
+					numberOfLivingCells++;
+				} else {
+					numberOfDeadCells++;
+				}
+			}
+		}
+		World world = worldFactory.createWorld(cells);
+		universe.setWorld(world);
+		WorldViewerPanel viewerPanel = panelFactory.createWorldViewerPanel(universe);
+		GraphicsMock g = new GraphicsMock();
+		viewerPanel.drawWorld(g);
+		Color living = viewerPanel.getLivingColor();
+		assertEquals("The number of drawn living cells should equal the number of living cells", numberOfLivingCells, g.getColorMap().get(living));
 	}
 
 }

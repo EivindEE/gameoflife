@@ -25,6 +25,10 @@ public class WorldViewerPanel extends JPanel{
 
 	private int cellXY;
 
+	private Color living = Color.CYAN;
+
+	private Color dead = Color.YELLOW;
+
 	public WorldViewerPanel (Universe universe) {
 		Validate.notNull(universe, "Universe cannot be null");
 		this.universe = universe;
@@ -63,6 +67,24 @@ public class WorldViewerPanel extends JPanel{
 	@Override
 	protected void paintComponent(Graphics g) {
 		this.drawWorld(g);
+	}
+
+	public Color getLivingColor() {
+		return this.living;
+	}
+
+	public void setLivingColor(Color living) {
+		this.living = living;
+		
+	}
+
+	public Color getDeadColor() {
+		return this.dead;
+	}
+
+	public void setDeadColor(Color dead) {
+		this.dead = dead;
+		
 	}
 	
 	
