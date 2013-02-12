@@ -12,6 +12,8 @@ import edu.uib.gol.model.factory.ToroidalArrayWorldFactory;
 import edu.uib.gol.model.factory.UniverseFactory;
 import edu.uib.gol.model.factory.WorldFactory;
 import edu.uib.gol.view.GUIWorldViewer;
+import edu.uib.gol.view.WorldViewerPanel;
+import edu.uib.gol.view.factory.GUIWorldViewerFactory;
 
 public class Main {
 	
@@ -20,27 +22,25 @@ public class Main {
         ApplicationContext context = new ClassPathXmlApplicationContext("main-context.xml");
         WorldFactory worldFactory = context.getBean(ToroidalArrayWorldFactory.class);
         UniverseFactory universeFactory = context.getBean(UniverseFactory.class);
+        GUIWorldViewerFactory viewerFactory = context.getBean(GUIWorldViewerFactory.class);
         Queue<World> worlds = new LinkedList<World>();
   
-        World world = worldFactory.createRandomWorld(100, 100);
+        World world = worldFactory.createRandomWorld(1000, 1000);
 //        World world = worldFactory.createWorld(ManyWorlds.LWSS);
         Universe universe = universeFactory.createUniverse(worldFactory, world);
-        GUIWorldViewer worldViewer = new GUIWorldViewer(universe);
-		worldViewer.init();
+        GUIWorldViewer worldViewer = viewerFactory.createWorldViewer(universe);
         while(true) {
         	if (worlds.size() > 4) {
         		worlds.poll();
         	}
         	World current = universe.tick(); 
         	if (worlds.contains(current)) {
-        		world = worldFactory.createRandomWorld(100, 100);
+        		world = worldFactory.createRandomWorld(1000, 1000);
         		universe.setWorld(world);
         	}
         	worlds.add(current);
         	worldViewer.drawWorld();
         	Thread.sleep(100);
-        	
         }
-        
 	}
 }
