@@ -28,7 +28,7 @@ public class Main {
         GUIWorldViewer worldViewer = new GUIWorldViewer(universe);
 		worldViewer.init();
         while(true) {
-        	if (worlds.size() > 10) {
+        	if (worlds.size() > 4) {
         		worlds.poll();
         	}
         	World current = universe.tick(); 
