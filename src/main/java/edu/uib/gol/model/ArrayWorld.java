@@ -14,15 +14,6 @@ public class ArrayWorld implements World{
 
 
 	protected Cell[][] cells;
-	
-	public ArrayWorld(int width, int height) {
-		this.cells = new Cell[width][height];
-		for(int i = 0; i < cells.length; i++) {
-			for (int j = 0; j < cells[i].length; j++) {
-				cells[i][j] = Cell.DEAD;
-			}
-		}
-	}
 
 	public ArrayWorld(Cell[][] cells) {
 		this.cells = cells;
