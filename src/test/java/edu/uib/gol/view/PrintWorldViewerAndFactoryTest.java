@@ -22,6 +22,7 @@ import edu.uib.gol.model.Universe;
 import edu.uib.gol.model.World;
 import edu.uib.gol.model.factory.UniverseFactory;
 import edu.uib.gol.model.factory.WorldFactory;
+import edu.uib.gol.view.factory.PrintWorldViewerFactory;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-context.xml")
