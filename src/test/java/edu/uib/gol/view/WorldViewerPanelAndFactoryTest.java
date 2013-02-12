@@ -21,13 +21,14 @@ import edu.uib.gol.model.factory.UniverseFactory;
 import edu.uib.gol.model.factory.WorldFactory;
 import edu.uib.gol.view.factory.GUIWorldViewerFactory;
 import edu.uib.gol.view.factory.WorldViewerFactory;
+import edu.uib.gol.view.factory.WorldViewerPanelFactory;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-context.xml")
-public class GUIWorldViewerAndFactoryTest {
+public class WorldViewerPanelAndFactoryTest {
 	@Autowired
-	@Qualifier("GUIWorldViewerFactory")
-	GUIWorldViewerFactory guiFactory;
+	@Qualifier("worldViewerPanelFactory")
+	WorldViewerPanelFactory panelFactory;
 	
 	@Autowired
 	UniverseFactory universeFactory;
@@ -49,15 +50,15 @@ public class GUIWorldViewerAndFactoryTest {
 	
 	@Test
 	public void testCreateWorldViewer() {
-		assertNotNull("The factory should not return null", guiFactory.createWorldViewer(universe));
+		assertNotNull("The factory should not return null", panelFactory.createWorldViewerPanel(universe));
 		exception.expect(IllegalArgumentException.class);
-		guiFactory.createWorldViewer(null);
+		panelFactory.createWorldViewerPanel(null);
 	}
 	
 	@Test
 	public void testDimensions() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		GUIWorldViewer viewer = guiFactory.createWorldViewer(universe);
+		WorldViewerPanel viewer = panelFactory.createWorldViewerPanel(universe);
 		viewer.init();
 		assertTrue("The panel is wider that the screen", viewer.getWidth() <= screenSize.width);
 		assertTrue("The panel is heigher that the screen", viewer.getHeight() <= screenSize.height);
