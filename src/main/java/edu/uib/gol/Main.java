@@ -24,8 +24,8 @@ public class Main {
         UniverseFactory universeFactory = context.getBean(UniverseFactory.class);
         GUIWorldViewerFactory viewerFactory = context.getBean(GUIWorldViewerFactory.class);
         Queue<World> worlds = new LinkedList<World>();
-  
-        World world = worldFactory.createRandomWorld(1000, 1000);
+        int worldSize = 300;
+        World world = worldFactory.createRandomWorld(worldSize, worldSize);
 //        World world = worldFactory.createWorld(ManyWorlds.LWSS);
         Universe universe = universeFactory.createUniverse(worldFactory, world);
         GUIWorldViewer worldViewer = viewerFactory.createWorldViewer(universe);
@@ -35,7 +35,7 @@ public class Main {
         	}
         	World current = universe.tick(); 
         	if (worlds.contains(current)) {
-        		world = worldFactory.createRandomWorld(1000, 1000);
+        		world = worldFactory.createRandomWorld(worldSize, worldSize);
         		universe.setWorld(world);
         	}
         	worlds.add(current);
