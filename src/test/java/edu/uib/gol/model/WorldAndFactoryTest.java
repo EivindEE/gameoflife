@@ -27,7 +27,9 @@ public class WorldAndFactoryTest {
 	@Qualifier("toroidalArrayWorldFactory")
 	WorldFactory toroidalWorldFactory;
 	
-	World defaultWorld;
+	protected World defaultWorld;
+	protected World toroidalWorld;
+	
 	int defaultWidth = 3;
 	int defaultHeight = 3;
 	int negativeNumber = -1;
@@ -38,6 +40,7 @@ public class WorldAndFactoryTest {
 	@Before
 	public void setUp() {
 		defaultWorld = worldFactory.createWorld(defaultWidth, defaultHeight);
+		toroidalWorld = toroidalWorldFactory.createWorld(defaultWidth, defaultHeight);
 	}
 
 
@@ -218,25 +221,6 @@ public class WorldAndFactoryTest {
 	}
 	
 	@Test
-	public void testToroidalAdjacent() {
-		Cell[][] toroidalGrid = new Cell[][] {
-			{Cell.DEAD, Cell.DEAD, Cell.DEAD},
-			{Cell.DEAD, Cell.DEAD, Cell.DEAD},
-			{Cell.DEAD, Cell.DEAD, Cell.LIVING}
-		};
-		World toroidalWorld = toroidalWorldFactory.createWorld(toroidalGrid);
-		for (int i = 0; i < toroidalWorld.getWidth(); i++) {
-			for (int j = 0; j < toroidalWorld.getHeight(); j++) {
-				if (i == 2 && j == 2) {
-					assertEquals("The cell at <" + i + "," + j + "> shouldn't have any living adjacent cells", 0, toroidalWorld.numberOfAdjacentLivingCells(i, j));
-				} else {
-					assertEquals("The cell at <" + i + "," + j + "> should have 1 living adjacent cell", 1, toroidalWorld.numberOfAdjacentLivingCells(i, j));
-				}
-			}
-		}
-	}
-
-	@Test
 	public void testNumberOfLivingAdjacentCellsHighWidthIndex() {
 		exception.expect(IllegalArgumentException.class);
 		defaultWorld.numberOfAdjacentLivingCells(defaultWidth, 0);
@@ -259,6 +243,51 @@ public class WorldAndFactoryTest {
 		exception.expect(IllegalArgumentException.class);
 		defaultWorld.numberOfAdjacentLivingCells(0, -1);
 	}
+	
+	@Test
+	public void testToroidalAdjacent() {
+		Cell[][] toroidalGrid = new Cell[][] {
+			{Cell.DEAD, Cell.DEAD, Cell.DEAD},
+			{Cell.DEAD, Cell.DEAD, Cell.DEAD},
+			{Cell.DEAD, Cell.DEAD, Cell.LIVING}
+		};
+		World toroidalWorld = toroidalWorldFactory.createWorld(toroidalGrid);
+		for (int i = 0; i < toroidalWorld.getWidth(); i++) {
+			for (int j = 0; j < toroidalWorld.getHeight(); j++) {
+				if (i == 2 && j == 2) {
+					assertEquals("The cell at <" + i + "," + j + "> shouldn't have any living adjacent cells", 0, toroidalWorld.numberOfAdjacentLivingCells(i, j));
+				} else {
+					assertEquals("The cell at <" + i + "," + j + "> should have 1 living adjacent cell", 1, toroidalWorld.numberOfAdjacentLivingCells(i, j));
+				}
+			}
+		}
+	}
+	
+	@Test
+	public void testToroidalNumberOfLivingAdjacentCellsHighWidthIndex() {
+		exception.expect(IllegalArgumentException.class);
+		toroidalWorld.numberOfAdjacentLivingCells(defaultWidth, 0);
+	}
+
+	@Test
+	public void testToroidalNumberOfLivingAdjacentCellsNegativeWidthIndex() {
+		exception.expect(IllegalArgumentException.class);
+		toroidalWorld.numberOfAdjacentLivingCells(-1, 0);
+	}
+
+	@Test
+	public void testToroidalNumberOfLivingAdjacentCellsHighHeightIndex() {
+		exception.expect(IllegalArgumentException.class);
+		toroidalWorld.numberOfAdjacentLivingCells(0, defaultHeight);
+	}
+
+	@Test
+	public void testToroidalNumberOfLivingAdjacentCellsNegativeHeightIndex() {
+		exception.expect(IllegalArgumentException.class);
+		toroidalWorld.numberOfAdjacentLivingCells(0, -1);
+	}
+
+	
 
 	@Test
 	public void testEqualsState() {
