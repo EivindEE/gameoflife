@@ -110,9 +110,11 @@ public class WorldViewerPanelAndFactoryTest {
 		universe.setWorld(world);
 		WorldViewerPanel viewerPanel = panelFactory.createWorldViewerPanel(universe);
 		GraphicsMock g = new GraphicsMock();
-		viewerPanel.drawWorld(g);
+		viewerPanel.paintComponent(g);
 		Color living = viewerPanel.getLivingColor();
 		assertEquals("The number of drawn living cells should equal the number of living cells", numberOfLivingCells, g.getColorMap().get(living));
+		// Should not throw error on null Graphics
+		viewerPanel.paintComponent(null);
 	}
 
 }
