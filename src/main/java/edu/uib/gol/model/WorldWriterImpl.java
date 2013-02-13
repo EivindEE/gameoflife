@@ -7,7 +7,7 @@ import java.nio.charset.Charset;
 import org.apache.commons.lang.Validate;
 import org.springframework.stereotype.Component;
 @Component
-public class StreamWorldWriter implements WorldWriter {
+public class WorldWriterImpl implements WorldWriter {
 	private static String DEAD_CELL = " ";
 	private static String LIVING_CELL = "*";
 	private static String LINE_SEPARATOR = "\n";
