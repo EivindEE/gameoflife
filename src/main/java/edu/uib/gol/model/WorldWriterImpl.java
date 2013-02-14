@@ -1,5 +1,7 @@
 package edu.uib.gol.model;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
@@ -26,5 +28,13 @@ public class WorldWriterImpl implements WorldWriter {
 			}
 		}
 		outputStream.write(stringBuilder.toString().getBytes(Charset.forName("UTF-8")));
+	}
+
+	public void write(World world, File worldFile) throws IOException {
+		Validate.notNull(world, "Cannot provide a null world");
+		Validate.notNull(worldFile, "Cannot provide a null file");
+		OutputStream stream = new FileOutputStream(worldFile);
+		this.write(world, stream);
+		
 	}
 }
