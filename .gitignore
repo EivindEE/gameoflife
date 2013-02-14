@@ -1,4 +1,5 @@
 .project
+tmp/
 .classpath
 bin/
 logs/
